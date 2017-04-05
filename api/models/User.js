@@ -12,15 +12,19 @@ module.exports = {
     uuid: {
       type: 'string',
       unique: true,
+      primaryKey: true,
     },
     email: {
       type: 'email',
       required: true,
       unique: true,
+    },
+    accesses: {
+      collection: 'access',
+      via: 'user'
     }
   },
   beforeCreate: function(user, cb) {
-    sails.log.debug('beforeValidate user: ', user);
     user.uuid = uuid();
     cb();
   }
