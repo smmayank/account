@@ -19,4 +19,7 @@
 
 module.exports.policies = {
   '*': false,
+  AuthController: {
+    signUp: 'fetchUser',
+  }
 };

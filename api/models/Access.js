@@ -10,7 +10,7 @@ module.exports = {
     type: {
       type: 'string',
       required: true,
-      enum: ['password']
+      enum: AccessUtil.accessTypes
     },
     data: {
       type: 'string',

@@ -21,4 +21,5 @@
  */
 
 module.exports.routes = {
+  'post /api/vo/auth/signup': 'AuthController.signUp',
 };
