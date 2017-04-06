@@ -8,7 +8,14 @@
 module.exports = {
   signUp: function(req, res) {
     var user = req.user;
-    sails.log.debug('User is %j', user);
-    res.ok();
+    UserTransaction.createUser(user, function(err, user) {
+      if (err || !user) {
+        return res.badRequest(err);
+      }
+      var auth_token = TokenUtil.createToken(user);
+      return res.ok({
+        auth_token: auth_token,
+      });
+    });
   },
 };

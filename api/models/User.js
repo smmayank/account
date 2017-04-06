@@ -19,6 +19,12 @@ module.exports = {
       required: true,
       unique: true,
     },
+    status: {
+      type: 'string',
+      required: true,
+      enum: ['unverified', 'verified', 'disabled'],
+      defaultsTo: 'unverified',
+    },
     accesses: {
       collection: 'access',
       via: 'user'

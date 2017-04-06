@@ -26,10 +26,15 @@ module.exports = function(req, res, next) {
   if (!accessData) {
     return res.badRequest('access_data is missing');
   }
-  req.user = {
-    email: email,
-    accessType: accessType,
-    accessData: accessData,
-  };
-  next();
+  AccessUtil.processAccess(accessType, accessData, function(processedData) {
+    if (!processedData) {
+      return res.badRequest('access_data is invalid');
+    }
+    req.user = {
+      email: email,
+      accessType: accessType,
+      accessData: processedData,
+    };
+    next();
+  });
 };
