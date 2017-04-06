@@ -1,12 +1,22 @@
 var jwt = require('jsonwebtoken');
 const secretKey = 'awesome_secret_key';
+const tokenOptions = {
+  expiresIn: '1d'
+}
 
-createToken = function(data) {
+createToken = function(userId, deviceId, cb) {
   var tokenData = {
-    data: data,
-    created: Date.now(),
-  }
-  return jwt.sign(tokenData, secretKey);
+    userId: userId,
+    deviceId: deviceId,
+    issued: Date.now(),
+  };
+  var token = jwt.sign(tokenData, secretKey, tokenOptions);
+  Redis.setValue(token, tokenData, function(err, result) {
+    if (err || !result) {
+      return cb(err)
+    }
+    return cb(false, token);
+  });
 }
 
 module.exports = {

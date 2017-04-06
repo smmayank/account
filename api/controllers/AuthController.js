@@ -8,13 +8,17 @@
 module.exports = {
   signUp: function(req, res) {
     var user = req.user;
-    UserTransaction.createUser(user, function(err, user) {
-      if (err || !user) {
+    UserTransaction.createUser(user, function(err, created) {
+      if (err || !created) {
         return res.badRequest(err);
       }
-      var auth_token = TokenUtil.createToken(user);
-      return res.ok({
-        auth_token: auth_token,
+      TokenUtil.createToken(created.uuid, req.deviceId, function(err, token) {
+        if (err) {
+          return res.badRequest(err);
+        }
+        return res.ok({
+          auth_token: token,
+        });
       });
     });
   },
