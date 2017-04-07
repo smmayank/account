@@ -25,12 +25,13 @@
     "redis": "^2.7.1",
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
+    "sails-migrations": "^2.0.10",
     "sails-postgresql": "^0.11.4",
     "uuid": "3.0.1"
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "./node_modules/sails-migrations/bin/cli.js migrate && node app.js"
   },
   "main": "app.js",
   "repository": {
